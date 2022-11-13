@@ -29,6 +29,7 @@ graph LR;
 
 ```mermaid
 gitGraph
+    commit id: "Application"
     branch main
     branch solution
     branch chaos
