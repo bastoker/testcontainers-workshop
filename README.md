@@ -5,7 +5,7 @@
 
 ```mermaid
 graph TD;
-    Vakantieplanner-->PostgreSQL DB;
+    Vakantieplanner-->PostgreSQL_1;
     Vakantieplanner-->Keycloak;
-    Keycloak-->PostgreSQL Keycloak DB;
+    Keycloak-->PostgreSQL_2;
 ```
