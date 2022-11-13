@@ -31,7 +31,7 @@ graph LR;
 gitGraph
     commit id: "Application"
     branch solution
-    commit id: "Integration Test Solution"    
+    commit id: "Integration Test Solution"
     checkout main
     branch chaos
     commit id: "Example using Toxiproxy"
