@@ -21,7 +21,7 @@ The architecture of the Holiday Planning Tool, or HPT, is as follows:
 ```mermaid
 graph LR;
     HPT_UI[fa:fa-user Web UI]-->HPT_backend
-    HPT_UI-->Keycloak
+    HPT_UI[fa:fa-user Web UI]-->Keycloak
     HPT_backend-->PostgreSQL_hpt[(HPT DB fa:fa-docker)];
     HPT_backend-->Keycloak;
     Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
