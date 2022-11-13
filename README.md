@@ -30,11 +30,12 @@ graph LR;
 ```mermaid
 gitGraph
     commit id: "Application"
-    branch chaos
-    commit id: "Add Chaos test with Toxiproxy"
-    checkout main
     branch solution
-    commit id: "Integration Test Solution"
+    commit id: "Integration Test Solution"    
+    checkout main
+    branch chaos
+    commit id: "Example using Toxiproxy"
+    checkout main
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
