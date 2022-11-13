@@ -1,4 +1,4 @@
-# testcontainers-workshop
+# testcontainers-workshop "Vakantieplanner"
 
 <p align="middle">
     <img src="logo.svg" height="180"/>
