@@ -25,7 +25,7 @@ graph LR;
     HPT_backend-->PostgreSQL_hpt[(HPT DB fa:fa-docker)];
     HPT_backend-->Keycloak;
     Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
-    PostgreSQL_hpt ~~~ PostgreSQL_keycloak
+    PostgreSQL_hpt~~~PostgreSQL_keycloak
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
