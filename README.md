@@ -1,5 +1,8 @@
 # testcontainers-workshop
 
+<img src="logo.svg" width="300"/>
+<img src="testcontainers-logo.svg" width="300"/>
+
 ![Testcontainers logo](testcontainers-logo.svg | width=300)
 ![J-Next logo](logo.svg | width=300)
 
