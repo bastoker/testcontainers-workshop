@@ -29,19 +29,9 @@ graph LR;
 
 ```mermaid
 gitGraph
-   commit id: "ZERO"
-   branch develop
-   commit id:"A"
-   checkout main
-   commit id:"ONE"
-   checkout develop
-   commit id:"B"
-   checkout main
-   commit id:"TWO"
-   cherry-pick id:"A"
-   commit id:"THREE"
-   checkout develop
-   commit id:"C"
+    branch main
+    branch solution
+    branch chaos
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
