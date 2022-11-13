@@ -27,6 +27,12 @@ graph LR;
     Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
 ```
 
+## Available branches
+This Git repository comprises three branches:
+ - main
+ - solution - The solution to the Integration Testing Assignment
+ - chaos - The solution to the extra Chaos Testing Assignment
+
 ```mermaid
 gitGraph
     commit id: "Application"
