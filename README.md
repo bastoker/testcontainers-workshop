@@ -35,7 +35,6 @@ gitGraph
     checkout main
     branch chaos
     commit id: "Example using Toxiproxy"
-    checkout main
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
