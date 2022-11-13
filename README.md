@@ -29,9 +29,9 @@ graph LR;
 
 ## Available branches
 This Git repository comprises three branches:
- - main
- - solution - The solution to the Integration Testing Assignment
- - chaos - The solution to the extra Chaos Testing Assignment
+ - **main** - Branch to use as a starting point for the Excercises
+ - **solution** - The solution to the Integration Testing Excercises
+ - **chaos** - The solution to the extra Chaos Testing Excercise
 
 ```mermaid
 gitGraph
