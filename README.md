@@ -31,8 +31,10 @@ graph LR;
 gitGraph
     commit id: "Application"
     branch main
-    branch solution
-    branch chaos
+    checkout chaos
+    merge main
+    checkout solution
+    merge main
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
