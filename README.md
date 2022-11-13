@@ -22,9 +22,9 @@ The architecture of the Holiday Planning Tool, or HPT, is as follows:
 graph LR;
     HPT_UI-->HPT_backend
     HPT_UI-->Keycloak
-    HPT_backend-->PostgreSQL_hpt[(HPT Database)];
+    HPT_backend-->PostgreSQL_hpt[(HPT DB)];
     HPT_backend-->Keycloak;
-    Keycloak-->PostgreSQL_keycloak[(Keycloak Database)];
+    Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
