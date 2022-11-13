@@ -1,7 +1,7 @@
 # testcontainers-workshop
 
-![Testcontainers logo](testcontainers-logo.svg "Testcontainers"  | width=300)
-![J-Next logo](logo.svg "J-Next" | width=300)
+![Testcontainers logo](testcontainers-logo.svg | width=300)
+![J-Next logo](logo.svg | width=300)
 
 ```mermaid
 graph TD;
