@@ -30,7 +30,6 @@ graph LR;
 ```mermaid
 gitGraph
     commit id: "Application"
-    branch main
     checkout chaos
     merge main
     checkout solution
