@@ -1,8 +1,8 @@
 # testcontainers-workshop
 
 <p align="middle">
-    <img src="logo.svg" width="300"/>
-    <img src="testcontainers-logo.svg" width="300"/>
+    <img src="logo.svg" height="180"/>
+    <img src="testcontainers-logo.svg" height="180"/>
 </p>    
 
 ```mermaid
