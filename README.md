@@ -31,10 +31,10 @@ graph LR;
 gitGraph
     commit id: "Application"
     branch chaos
-    merge main
+    commit id: "Add Chaos test with Toxiproxy"
     checkout main
     branch solution
-    merge main
+    commit id: "Integration Test Solution"
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
