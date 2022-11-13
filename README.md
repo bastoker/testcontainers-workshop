@@ -24,7 +24,7 @@ graph TD;
     HPT_UI-->Keycloak
     HPT_backend-->PostgreSQL_hpt;
     HPT_backend-->Keycloak;
-    Keycloak-->PostgreSQL_keycloak;
+    Keycloak-->[(PostgreSQL_keycloak)];
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
