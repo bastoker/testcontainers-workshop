@@ -20,12 +20,28 @@ The architecture of the Holiday Planning Tool, or HPT, is as follows:
 
 ```mermaid
 graph LR;
-    HPT_UI[fa:fa-user Web UI]-->HPT_backend
-    HPT_UI[fa:fa-user Web UI]-->Keycloak
-    HPT_backend-->PostgreSQL_hpt[(HPT DB fa:fa-docker)];
+    HPT_UI[Web UI]-->HPT_backend
+    HPT_UI[Web UI]-->Keycloak
+    HPT_backend-->PostgreSQL_hpt[(HPT DB)];
     HPT_backend-->Keycloak;
     Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
-    PostgreSQL_hpt~~~PostgreSQL_keycloak
+```
+
+```mermaid
+gitGraph
+   commit id: "ZERO"
+   branch develop
+   commit id:"A"
+   checkout main
+   commit id:"ONE"
+   checkout develop
+   commit id:"B"
+   checkout main
+   commit id:"TWO"
+   cherry-pick id:"A"
+   commit id:"THREE"
+   checkout develop
+   commit id:"C"
 ```
 
 The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
