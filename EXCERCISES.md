@@ -1,0 +1,8 @@
+# Integration Testing Excercises
+
+<p align="middle">
+    <img src="challenge.png" height="150"/>
+</p>
+
+## A
+Create a test that adds a colleague to the database

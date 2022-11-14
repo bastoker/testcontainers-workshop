@@ -17,7 +17,6 @@ Because we all deserve some time off, don't we?
 ## High level architecture
 The architecture of the Holiday Planning Tool, or HPT, is as follows:
 
-
 ```mermaid
 graph LR;
     HPT_UI[Web UI]-->HPT_backend
@@ -26,6 +25,11 @@ graph LR;
     HPT_backend-->Keycloak;
     Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
 ```
+
+The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
+Our own application state is persisted using a separate PostgreSQL database instance.
+
+The UI only communicates with the HPT-backend and with Keycloak for the login flow.
 
 ## Available branches
 This Git repository comprises three branches:
@@ -43,8 +47,4 @@ gitGraph
     commit id: "Example using Toxiproxy"
 ```
 
-The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
-Our own application state is persisted using a separate PostgreSQL database server.
-
-The UI only communicates with the HPT-backend and with Keycloak for the login flow.
 
