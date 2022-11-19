@@ -1,4 +1,4 @@
-package nl.jnext.workshop.testcontainers.vakantieplanner;
+package db.generate;
 
 import org.flywaydb.core.Flyway;
 import org.jooq.codegen.GenerationTool;
