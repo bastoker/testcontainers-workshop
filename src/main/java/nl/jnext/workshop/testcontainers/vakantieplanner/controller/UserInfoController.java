@@ -1,11 +1,8 @@
 package nl.jnext.workshop.testcontainers.vakantieplanner.controller;
 
 import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
-import org.keycloak.representations.IDToken;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +16,7 @@ import java.util.Collection;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-public class UserInfoController {
+public class UserInfoController extends AbstractController {
     @GetMapping(path = "/userinfo", produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('user')")
     public String getUserInfo(KeycloakAuthenticationToken authToken) {

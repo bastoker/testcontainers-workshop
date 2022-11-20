@@ -1,4 +1,4 @@
-package nl.jnext.workshop.testcontainers.helper;
+package nl.jnext.workshop.testcontainers.helper.testcontainer;
 
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.keycloak.admin.client.CreatedResponseUtil;
