@@ -1,6 +1,6 @@
 package nl.jnext.workshop.testcontainers.vakantieplanner;
 
-import nl.jnext.workshop.testcontainers.helper.testcontainer.KeycloakTestcontainer;
+import helper.KeycloakTestcontainer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,7 @@ class VakantieplannerApplicationTests {
 
     @LocalServerPort
     protected int localServerPort;
+
     @DynamicPropertySource
     static void configureApplicationContext(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
@@ -79,11 +80,11 @@ class VakantieplannerApplicationTests {
 
         // Call our API using this bearer token:
         given().headers(
-                "Authorization",
-                "Bearer " + bearerToken).
-        when().
+                        "Authorization",
+                        "Bearer " + bearerToken).
+                when().
                 get(String.format("http://localhost:%d/userinfo", localServerPort)).
-        then().
+                then().
                 statusCode(200).
                 body("name", equalTo("bob"));
     }

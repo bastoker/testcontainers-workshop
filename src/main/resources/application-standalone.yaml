@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:54611/integration-tests-db?loggerLevel=OFF'
+    username: 'admin'
+    password: '@dm1n'
+keycloak:
+  auth-server-url: 'http://localhost:54617/'
+  realm: vakantieplanner
+  resource: spring-app
+  use-resource-role-mappings: false
+  bearer-only: true
+
+

@@ -1,5 +1,6 @@
 package nl.jnext.workshop.testcontainers.vakantieplanner.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import nl.jnext.workshop.testcontainers.vakantieplanner.controller.auth.CurrentUser;
 import nl.jnext.workshop.testcontainers.vakantieplanner.controller.exceptions.OverlappingHolidayException;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
@@ -10,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/holiday")
 public class HolidayController extends AbstractController {
@@ -19,7 +21,7 @@ public class HolidayController extends AbstractController {
     @GetMapping(path = "/{user}", produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('user')")
     public String getHoliday(
-            @CurrentUser String keycloakUser,
+            @Parameter(hidden = true) @CurrentUser String keycloakUser,
             @PathVariable("user") String user) {
         logger.info("Endpoint /holiday/{} is called as keycloak user {}", user, keycloakUser);
         return "{\"keycloakUsername\": \"" + keycloakUser + "\"}";

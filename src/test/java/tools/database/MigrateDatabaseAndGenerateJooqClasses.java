@@ -1,4 +1,4 @@
-package db.generate;
+package tools.database;
 
 import org.flywaydb.core.Flyway;
 import org.jooq.codegen.GenerationTool;
@@ -6,13 +6,6 @@ import org.jooq.meta.jaxb.Configuration;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 import org.jooq.meta.jaxb.*;
-import java.sql.*;
-import javax.sql.*;
-import org.jooq.meta.jaxb.*;
-import static org.jooq.impl.DSL.*;
-import static org.jooq.impl.SQLDataType.*;
-import org.jooq.*;
-import org.jooq.impl.*;
 
 /**
  * This standalone application uses Testcontainers, Flyway and jOOQ to generate the

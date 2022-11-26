@@ -1,10 +1,8 @@
 package nl.jnext.workshop.testcontainers.vakantieplanner;
 
 import io.restassured.http.ContentType;
-import nl.jnext.workshop.testcontainers.helper.testcontainer.KeycloakTestcontainer;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +16,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
