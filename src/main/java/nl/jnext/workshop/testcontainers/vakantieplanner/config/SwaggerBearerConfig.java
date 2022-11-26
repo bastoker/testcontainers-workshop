@@ -2,6 +2,8 @@ package nl.jnext.workshop.testcontainers.vakantieplanner.config;
 
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -21,6 +23,9 @@ public class SwaggerBearerConfig {
         return new OpenAPI()
                 .components(new Components()
                         .addSecuritySchemes(SCHEME_NAME, createBearerScheme()))
+                .info(new Info()
+                        .title("Vakantieplanner API")
+                        .contact(new Contact().name("Bas Stoker").email("bas.stoker@j-next.nl")))
                 .addSecurityItem(new SecurityRequirement().addList(SCHEME_NAME));
     }
 
