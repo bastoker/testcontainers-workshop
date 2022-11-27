@@ -62,7 +62,7 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/keycloak-url")
                 .permitAll()
-                .antMatchers("/holiday/**")
+                .antMatchers("/holiday*/**")
                 .permitAll()
                  /////////
                 .anyRequest()

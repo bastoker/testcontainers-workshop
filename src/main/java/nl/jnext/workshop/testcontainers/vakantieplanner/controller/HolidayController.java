@@ -40,7 +40,7 @@ public class HolidayController extends AbstractController {
     }
 
     @DeleteMapping(path = "/{user}/{holiday-id}")
-    @PreAuthorize("hasAnyRole('user')")
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
     public void deleteHoliday(@Parameter(hidden = true) @CurrentUser String keycloakUser,
                               @PathVariable("user") String user,
                               @PathVariable("holiday-id") int holidayId
@@ -51,7 +51,7 @@ public class HolidayController extends AbstractController {
     }
 
     @PostMapping(path = "/{user}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('user')")
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
     public Holiday addHoliday(
             @Parameter(hidden = true) @CurrentUser String keycloakUser,
             @PathVariable("user") String user,
@@ -62,7 +62,7 @@ public class HolidayController extends AbstractController {
     }
 
     @GetMapping(path = "/{user}", produces = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('user')")
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
     public List<Holiday> getHolidays(
             @Parameter(hidden = true) @CurrentUser String keycloakUser,
             @PathVariable("user") String user
@@ -73,7 +73,7 @@ public class HolidayController extends AbstractController {
     }
 
     @GetMapping(path = "/{user}/{holiday-id}", produces = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('user')")
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
     public Holiday getSingleHoliday(
             @Parameter(hidden = true) @CurrentUser String keycloakUser,
             @PathVariable("user") String user,
@@ -85,7 +85,7 @@ public class HolidayController extends AbstractController {
     }
 
     @PutMapping(path = "/{user}/{holiday-id}", consumes = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('user')")
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
     public void updateSingleHoliday(
             @Parameter(hidden = true) @CurrentUser String keycloakUser,
             @PathVariable("user") String user,
@@ -102,7 +102,7 @@ public class HolidayController extends AbstractController {
     }
 
     @PostMapping(path = "/{user}", consumes = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('user')")
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
     public void postHoliday(
             @CurrentUser String keycloakUser,
             @PathVariable("user") String user,

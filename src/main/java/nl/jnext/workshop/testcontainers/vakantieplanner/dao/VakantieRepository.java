@@ -7,8 +7,12 @@ import nl.jnext.workshop.testcontainers.vakantieplanner.controller.HolidayContro
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.records.HolidayRecord;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.records.MemberRecord;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
+import nl.jnext.workshop.testcontainers.vakantieplanner.model.Member;
+import nl.jnext.workshop.testcontainers.vakantieplanner.model.MemberWithHolidays;
 import org.jooq.DSLContext;
-import org.jooq.Result;
+
+import static org.jooq.impl.DSL.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +21,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class VakantieRepository {
@@ -55,6 +58,28 @@ public class VakantieRepository {
         return new ArrayList<>(fetchResult.map(
                 fr -> new Holiday(fr.getId(), fr.getDescription(), fr.getStartDate(), fr.getEndDate())
         ));
+    }
+
+    public List<MemberWithHolidays> retrieveAllHolidays() {
+//        Result<Record2<MemberRecord, Result<Record1<HolidayRecord>>>> result =
+
+        var fetch = create.select(
+                        MEMBER,
+                        multiset(
+                                selectFrom(HOLIDAY)
+                                        .where(HOLIDAY.MEMBER_ID.eq(MEMBER.ID))
+                        ))
+                .from(MEMBER)
+                .fetch();
+
+        return fetch.stream().map(r -> new MemberWithHolidays(
+                new Member(r.component1().getId(), r.component1().getName()),
+                r.component2().map(h -> new Holiday(
+                        h.getId(),
+                        h.getDescription(),
+                        h.getStartDate(),
+                        h.getEndDate()
+                )))).toList();
     }
 
     public Holiday retrieveHoliday(int id) {

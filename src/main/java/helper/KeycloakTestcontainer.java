@@ -66,10 +66,10 @@ public class KeycloakTestcontainer {
         return userId;
     }
 
-    public String addSuperUser(String name) {
+    public String addSuperUser(String name, String password) {
         String userId = addUserWithName(name);
         addRoleToUserWithId(userId, SUPER_USER_ROLE);
-        setPasswordForUser(userId, "password");
+        setPasswordForUser(userId, password);
         return userId;
     }
 
