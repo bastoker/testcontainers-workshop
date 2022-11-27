@@ -23,17 +23,16 @@ public class ModelSerializationTest {
     @Autowired
     private ObjectMapper mapper;
 
-    private static final TypeRef<List<Holiday>> LIST_OF_HOLIDAYS_TYPE = new TypeRef<>() {};
+//    private static final TypeRef<List<Holiday>> LIST_OF_HOLIDAYS_TYPE = new TypeRef<>() {};
 
     @Test
     void serializeMember() throws Exception {
-        Member member = new Member("bob", List.of(new Holiday("Zomervakantie", null, null)));
+        Member member = new Member(1, "bob");
         String s = mapper.writeValueAsString(member);
         logger.info("Result of serialization is {}", s);
 
         String nameAttr = JsonPath.parse(s).read("$.name");
         assertThat(nameAttr).isEqualTo("bob");
-        List<Holiday> result = JsonPath.parse(s).read("$.holidays", LIST_OF_HOLIDAYS_TYPE);
-        logger.info("Result of parsing generated json of holidays attribute is {}", result);
+//        List<Holiday> result = JsonPath.parse(s).read("$.holidays", LIST_OF_HOLIDAYS_TYPE);
     }
 }

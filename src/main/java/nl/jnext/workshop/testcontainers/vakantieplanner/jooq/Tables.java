@@ -7,7 +7,6 @@ package nl.jnext.workshop.testcontainers.vakantieplanner.jooq;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.FlywaySchemaHistory;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Holiday;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Member;
-import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Team;
 
 
 /**
@@ -30,9 +29,4 @@ public class Tables {
      * The table <code>public.member</code>.
      */
     public static final Member MEMBER = Member.MEMBER;
-
-    /**
-     * The table <code>public.team</code>.
-     */
-    public static final Team TEAM = Team.TEAM;
 }

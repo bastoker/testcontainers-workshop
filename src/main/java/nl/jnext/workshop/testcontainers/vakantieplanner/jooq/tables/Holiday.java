@@ -17,7 +17,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row3;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -53,6 +53,16 @@ public class Holiday extends TableImpl<HolidayRecord> {
      * The column <code>public.holiday.id</code>.
      */
     public final TableField<HolidayRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+
+    /**
+     * The column <code>public.holiday.member_id</code>.
+     */
+    public final TableField<HolidayRecord, Integer> MEMBER_ID = createField(DSL.name("member_id"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>public.holiday.description</code>.
+     */
+    public final TableField<HolidayRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.VARCHAR(50).nullable(false), this, "");
 
     /**
      * The column <code>public.holiday.start_date</code>.
@@ -118,6 +128,20 @@ public class Holiday extends TableImpl<HolidayRecord> {
     }
 
     @Override
+    public List<ForeignKey<HolidayRecord, ?>> getReferences() {
+        return Arrays.<ForeignKey<HolidayRecord, ?>>asList(Keys.HOLIDAY__HOLIDAY_MEMBER_ID_FKEY);
+    }
+
+    private transient Member _member;
+
+    public Member member() {
+        if (_member == null)
+            _member = new Member(this, Keys.HOLIDAY__HOLIDAY_MEMBER_ID_FKEY);
+
+        return _member;
+    }
+
+    @Override
     public Holiday as(String alias) {
         return new Holiday(DSL.name(alias), this);
     }
@@ -144,11 +168,11 @@ public class Holiday extends TableImpl<HolidayRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row3 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Integer, LocalDate, LocalDate> fieldsRow() {
-        return (Row3) super.fieldsRow();
+    public Row5<Integer, Integer, String, LocalDate, LocalDate> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

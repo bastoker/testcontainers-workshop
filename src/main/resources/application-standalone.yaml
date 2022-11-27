@@ -1,12 +1,14 @@
 server:
   port: 8080
+  error:
+    include-message: always
 spring:
   datasource:
-    url: 'jdbc:postgresql://localhost:54611/integration-tests-db?loggerLevel=OFF'
+    url: 'jdbc:postgresql://localhost:59629/integration-tests-db?loggerLevel=OFF'
     username: 'admin'
     password: '@dm1n'
 keycloak:
-  auth-server-url: 'http://localhost:54617/'
+  auth-server-url: 'http://localhost:56248/'
   realm: vakantieplanner
   resource: spring-app
   use-resource-role-mappings: false

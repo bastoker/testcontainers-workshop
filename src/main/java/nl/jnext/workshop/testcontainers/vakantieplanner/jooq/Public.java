@@ -10,7 +10,6 @@ import java.util.List;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.FlywaySchemaHistory;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Holiday;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Member;
-import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Team;
 
 import org.jooq.Catalog;
 import org.jooq.Sequence;
@@ -47,11 +46,6 @@ public class Public extends SchemaImpl {
     public final Member MEMBER = Member.MEMBER;
 
     /**
-     * The table <code>public.team</code>.
-     */
-    public final Team TEAM = Team.TEAM;
-
-    /**
      * No further instances allowed
      */
     private Public() {
@@ -68,8 +62,7 @@ public class Public extends SchemaImpl {
     public final List<Sequence<?>> getSequences() {
         return Arrays.<Sequence<?>>asList(
             Sequences.HOLIDAY_ID_SEQ,
-            Sequences.MEMBER_ID_SEQ,
-            Sequences.TEAM_ID_SEQ);
+            Sequences.MEMBER_ID_SEQ);
     }
 
     @Override
@@ -77,7 +70,6 @@ public class Public extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             FlywaySchemaHistory.FLYWAY_SCHEMA_HISTORY,
             Holiday.HOLIDAY,
-            Member.MEMBER,
-            Team.TEAM);
+            Member.MEMBER);
     }
 }

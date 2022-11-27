@@ -28,6 +28,13 @@ public class UserInfoController extends AbstractController {
     @Value("classpath:j-next-logo.base64")
     Resource jnextLogoAsBase64;
 
+    @GetMapping(path = "/keycloak-url", produces = APPLICATION_JSON_VALUE)
+    public String getKeycloakUrl() {
+        return String.format("""
+                {"keycloakUrl": "%s"}
+                """, keyCloakAuthServerUrl);
+    }
+
     @GetMapping(path = "/userinfo", produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('user')")
     public String getUserInfo(KeycloakAuthenticationToken authToken) {

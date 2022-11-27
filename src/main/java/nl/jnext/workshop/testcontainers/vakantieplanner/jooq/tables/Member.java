@@ -16,7 +16,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row3;
+import org.jooq.Row2;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -52,11 +52,6 @@ public class Member extends TableImpl<MemberRecord> {
      * The column <code>public.member.id</code>.
      */
     public final TableField<MemberRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
-
-    /**
-     * The column <code>public.member.team_id</code>.
-     */
-    public final TableField<MemberRecord, Integer> TEAM_ID = createField(DSL.name("team_id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.member.name</code>.
@@ -113,7 +108,7 @@ public class Member extends TableImpl<MemberRecord> {
 
     @Override
     public List<UniqueKey<MemberRecord>> getKeys() {
-        return Arrays.<UniqueKey<MemberRecord>>asList(Keys.MEMBER_PKEY);
+        return Arrays.<UniqueKey<MemberRecord>>asList(Keys.MEMBER_PKEY, Keys.MEMBER_NAME_KEY);
     }
 
     @Override
@@ -143,11 +138,11 @@ public class Member extends TableImpl<MemberRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row3 type methods
+    // Row2 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row3<Integer, Integer, String> fieldsRow() {
-        return (Row3) super.fieldsRow();
+    public Row2<Integer, String> fieldsRow() {
+        return (Row2) super.fieldsRow();
     }
 }

@@ -1,5 +1,6 @@
 package nl.jnext.workshop.testcontainers.vakantieplanner;
 
+import helper.KeycloakTestcontainer;
 import io.restassured.http.ContentType;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
 import org.junit.jupiter.api.BeforeAll;
@@ -84,6 +85,7 @@ class HolidayControllerTest {
 
         // Holiday to post:
         Holiday holiday = new Holiday(
+                123,
                 "Zomervakantie",
                 LocalDate.of(2022, 8, 11),
                 LocalDate.of(2022, 8, 30)

@@ -24,9 +24,4 @@ public class Sequences {
      * The sequence <code>public.member_id_seq</code>
      */
     public static final Sequence<Integer> MEMBER_ID_SEQ = Internal.createSequence("member_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
-
-    /**
-     * The sequence <code>public.team_id_seq</code>
-     */
-    public static final Sequence<Integer> TEAM_ID_SEQ = Internal.createSequence("team_id_seq", Public.PUBLIC, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
 }
