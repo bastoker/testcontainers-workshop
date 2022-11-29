@@ -83,6 +83,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- JUnit binding for testcontainers -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Below two deps are needed for MigrateDatabaseAndGenerateJooqClasses.java  -->
         <dependency>
             <groupId>org.jooq</groupId>

@@ -4,11 +4,11 @@ server:
     include-message: always
 spring:
   datasource:
-    url: 'jdbc:postgresql://localhost:59629/integration-tests-db?loggerLevel=OFF'
+    url: 'jdbc:postgresql://localhost:52541/integration-tests-db?loggerLevel=OFF'
     username: 'admin'
-    password: '@dm1n'
+    password: 'admin'
 keycloak:
-  auth-server-url: 'http://localhost:59749/'
+  auth-server-url: 'http://localhost:52549/'
   realm: vakantieplanner
   resource: spring-app
   use-resource-role-mappings: false
