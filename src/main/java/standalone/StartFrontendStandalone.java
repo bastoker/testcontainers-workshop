@@ -8,7 +8,7 @@ public class StartFrontendStandalone {
 
     @SuppressWarnings("deprecation")
     private static GenericContainer<?> ui =
-            new FixedHostPortGenericContainer<>("suffix/testcontainers-workshop-ui:1.0.1")
+            new FixedHostPortGenericContainer<>("suffix/testcontainers-workshop-ui:1.1")
                     .withFixedExposedPort(8081, 8080).withExposedPorts(8080);
 
     public static void main(String... args) {
