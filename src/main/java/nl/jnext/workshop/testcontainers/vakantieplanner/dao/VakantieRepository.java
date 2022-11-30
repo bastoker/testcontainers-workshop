@@ -15,7 +15,6 @@ import org.jooq.DSLContext;
 
 import static org.jooq.impl.DSL.*;
 
-import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 @Component
 public class VakantieRepository {

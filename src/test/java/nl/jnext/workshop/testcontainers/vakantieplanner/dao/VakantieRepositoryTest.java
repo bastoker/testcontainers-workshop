@@ -27,12 +27,11 @@ public class VakantieRepositoryTest {
     @DynamicPropertySource
     static void configureContext(DynamicPropertyRegistry registry) {
         // Doe hier iets:
-        postgres.start();
 
         // En maak de Spring configuratie af:
-        registry.add("spring.datasource.url", () -> postgres.getJdbcUrl());
-        registry.add("spring.datasource.username", () -> postgres.getUsername());
-        registry.add("spring.datasource.password", () -> postgres.getPassword());
+//        registry.add("spring.datasource.url", () -> ???);
+//        registry.add("spring.datasource.username", () -> ???);
+//        registry.add("spring.datasource.password", () -> ???);
     }
 
     @Test
