@@ -4,7 +4,6 @@ import helper.KeycloakTestcontainer;
 import io.restassured.http.ContentType;
 import nl.jnext.workshop.testcontainers.vakantieplanner.dao.VakantieRepository;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,6 @@ class VakantieplannerApiTests {
         keycloak.addNormalUser("pete", "secret");
         keycloak.addNormalUser("sam", "secret");
         keycloak.addNormalUser("bob", "secret");
-
     }
 
     @Test
@@ -99,8 +97,8 @@ class VakantieplannerApiTests {
         int idOfHoliday = vakantieRepository.addHoliday("sam", new Holiday(
                 -1,
                 "Zomervakantie",
-                LocalDate.of(2022, 7, 2),
-                LocalDate.of(2022, 7, 22)
+                LocalDate.of(2019, 7, 2),
+                LocalDate.of(2019, 7, 22)
         )).id();
 
         // Call our API using this bearer token:
@@ -117,17 +115,61 @@ class VakantieplannerApiTests {
         ;
     }
 
+    @DisplayName("Een vakantie toevoegen lukt als deze niet overlapt met een bestaande vakantie")
+    @Test
+    void addingASecondHolidaySucceeds() {
+        // Logged in as bob
+        String bearerToken = keycloak.getBearerTokenFor("bob", "secret");
+
+        // Voeg een vakantie toe en bewaar het technische id
+        vakantieRepository.addHoliday("sam", new Holiday(
+                -1,
+                "Zomervakantie",
+                LocalDate.of(2018, 7, 2),
+                LocalDate.of(2018, 7, 22)
+        ));
+
+        // Tweede vakantie om toe te voegen:
+        Holiday holiday2 = new Holiday(
+                123,
+                "Zomervakantie",
+                LocalDate.of(2017, 7, 20),
+                LocalDate.of(2017, 12, 30)
+        );
+
+        // Call our API using this bearer token:
+        given()
+                .headers(
+                        "Authorization",
+                        "Bearer " + bearerToken)
+                .contentType(ContentType.JSON)
+                .body(holiday2)
+                .when()
+                .post(String.format("http://localhost:%d/holiday/bob", localServerPort))
+                .then()
+                .log().ifValidationFails()
+                .statusCode(200);
+    }
+
     @DisplayName("Een vakantie toevoegen kan niet als deze overlapt met een bestaande vakantie")
     @Test
     void addingHolidayThatConflictsWithExistingHolidayIsRejected() {
         // Logged in as bob
         String bearerToken = keycloak.getBearerTokenFor("bob", "secret");
 
-        // Holiday to post:
-        Holiday holiday = new Holiday(
+        // Voeg een vakantie toe en bewaar het technische id
+        vakantieRepository.addHoliday("sam", new Holiday(
+                -1,
+                "Zomervakantie",
+                LocalDate.of(2022, 7, 2),
+                LocalDate.of(2022, 7, 22)
+        ));
+
+        // 2nd holiday to post:
+        Holiday holiday2 = new Holiday(
                 123,
                 "Zomervakantie",
-                LocalDate.of(2022, 8, 11),
+                LocalDate.of(2022, 7, 20),
                 LocalDate.of(2022, 8, 30)
         );
 
@@ -137,9 +179,9 @@ class VakantieplannerApiTests {
                         "Authorization",
                         "Bearer " + bearerToken)
                 .contentType(ContentType.JSON)
-                .body(holiday)
+                .body(holiday2)
                 .when()
-                .post(String.format("http://localhost:%d/holiday/bob/conflicts", localServerPort))
+                .post(String.format("http://localhost:%d/holiday/bob", localServerPort))
                 .then()
                 .log().ifValidationFails()
                 .statusCode(409);

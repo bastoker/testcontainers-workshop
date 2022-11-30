@@ -110,15 +110,4 @@ public class HolidayController extends AbstractController {
         }
         vakantieRepository.updateHoliday(user, holiday);
     }
-
-    @PostMapping(path = "/{user}/conflicts", consumes = APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('user', 'superuser')")
-    public void postHoliday(
-            @CurrentUser String keycloakUser,
-            @PathVariable("user") String user,
-            @RequestBody Holiday holiday) {
-        logger.info("Endpoint POST /holiday/{} is called as keycloak user {}", user, keycloakUser);
-        checkMatchingUsers(keycloakUser, user, "User {} is not allowed to view holiday of someone else, in this case {}");
-        throw new OverlappingHolidayException();
-    }
 }
