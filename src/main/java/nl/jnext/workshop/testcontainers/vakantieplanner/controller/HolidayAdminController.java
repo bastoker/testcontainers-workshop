@@ -18,7 +18,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/holidays")
+@RequestMapping("/holiday-admin")
 public class HolidayAdminController extends AbstractController {
 
     Logger logger = LoggerFactory.getLogger(HolidayAdminController.class);

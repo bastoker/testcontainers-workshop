@@ -10,7 +10,7 @@ import static org.testcontainers.containers.PostgreSQLContainer.POSTGRESQL_PORT;
 public class StartDatabaseStandalone {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
             DockerImageName.parse("postgres:15"))
-            .withDatabaseName("integration-tests-db")
+            .withDatabaseName("standalone-db")
             .withUsername("admin")
             .withPassword("admin");
 

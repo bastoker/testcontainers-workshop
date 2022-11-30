@@ -7,6 +7,7 @@ import nl.jnext.workshop.testcontainers.vakantieplanner.controller.exceptions.No
 import nl.jnext.workshop.testcontainers.vakantieplanner.controller.exceptions.OverlappingHolidayException;
 import nl.jnext.workshop.testcontainers.vakantieplanner.dao.VakantieRepository;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
+import nl.jnext.workshop.testcontainers.vakantieplanner.model.MemberWithHolidays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,15 @@ public class HolidayController extends AbstractController {
         return vakantieRepository.retrieveHolidaysForMemberWithName(user);
     }
 
+    @GetMapping(path = "/all", produces = APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyRole('user', 'superuser')")
+    public List<MemberWithHolidays> getHolidays(
+            @Parameter(hidden = true) @CurrentUser String keycloakUser
+    ) {
+        logger.info("Admin Endpoint GET /holidays/all is called as keycloak user {}", keycloakUser);
+        return vakantieRepository.retrieveAllHolidays();
+    }
+
     @GetMapping(path = "/{user}/{holiday-id}", produces = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('user', 'superuser')")
     public Holiday getSingleHoliday(
@@ -92,22 +102,22 @@ public class HolidayController extends AbstractController {
             @PathVariable("holiday-id") int holidayId,
             @RequestBody Holiday holiday
     ) {
-        logger.info("Endpoint GET /holiday/{}/{} is called as keycloak user {}", user, holidayId, keycloakUser);
+        logger.info("Endpoint PUT /holiday/{}/{} is called as keycloak user {}", user, holidayId, keycloakUser);
         checkMatchingUsernames(user, keycloakUser);
         if (holidayId != holiday.id()) {
             logger.error("Id of holiday does not match request path param");
             throw new IllegalArgumentException("Id of holiday does not match request path param");
         }
-        vakantieRepository.updateHoliday(holiday);
+        vakantieRepository.updateHoliday(user, holiday);
     }
 
-    @PostMapping(path = "/{user}", consumes = APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/{user}/conflicts", consumes = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('user', 'superuser')")
     public void postHoliday(
             @CurrentUser String keycloakUser,
             @PathVariable("user") String user,
             @RequestBody Holiday holiday) {
-        logger.info("Endpoint /holiday/{} is called as keycloak user {}", user, keycloakUser);
+        logger.info("Endpoint POST /holiday/{} is called as keycloak user {}", user, keycloakUser);
         checkMatchingUsers(keycloakUser, user, "User {} is not allowed to view holiday of someone else, in this case {}");
         throw new OverlappingHolidayException();
     }

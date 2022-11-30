@@ -1,53 +1,86 @@
 package nl.jnext.workshop.testcontainers.vakantieplanner.dao;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
+import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jooq.JooqTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
+
+@ComponentScan("nl.jnext.workshop.testcontainers.vakantieplanner.dao")
 @JooqTest
-@Testcontainers
 public class VakantieRepositoryTest {
 
-    @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:15"));
+    private static PostgreSQLContainer<?> postgres =
+            new PostgreSQLContainer<>("postgres:15");
 
     @Autowired
-    private DSLContext dslContext;
-
     private VakantieRepository repository;
 
     @DynamicPropertySource
     static void configureContext(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
-
-    @BeforeEach
-    public void init() {
-        repository = new VakantieRepository(dslContext);
-    }
-
-    @BeforeAll
-    public static void setup() {
+        // Doe hier iets:
         postgres.start();
+
+        // En maak de Spring configuratie af:
+        registry.add("spring.datasource.url", () -> postgres.getJdbcUrl());
+        registry.add("spring.datasource.username", () -> postgres.getUsername());
+        registry.add("spring.datasource.password", () -> postgres.getPassword());
     }
 
     @Test
     public void canQueryDatabase() {
-        repository.getIdForUsername("pete");
+        int idOfPete = repository.getIdForUsername("pete");
+        assertThat(idOfPete).isGreaterThan(0);
     }
+
+    @Test
+    public void canAddAndRetrieveHoliday() {
+        Holiday persistedHoliday = repository.addHoliday("pete", new Holiday(
+                -1,
+                "Zomervakantie",
+                LocalDate.of(2023, 8, 6),
+                LocalDate.of(2023, 8, 25)));
+        assertThat(persistedHoliday.id()).isGreaterThan(0);
+
+        List<Holiday> holidaysOfPete = repository.retrieveHolidaysForMemberWithName("pete");
+        assertThat(holidaysOfPete).hasSize(1);
+        assertThat(holidaysOfPete.get(0).description()).isEqualTo("Zomervakantie");
+    }
+
+    @Test
+    public void whenHolidayOverlapsItIsDetected() {
+        Holiday persistedHoliday = repository.addHoliday("john", new Holiday(
+                -1,
+                "Zomervakantie",
+                LocalDate.of(2020, 8, 6),
+                LocalDate.of(2020, 8, 25)));
+
+        boolean resultOverlapping = repository.checkIfHolidayIsPossible(
+                LocalDate.of(2020, 7, 7),
+                LocalDate.of(2020, 8, 7));
+
+        assertThat(resultOverlapping).isEqualTo(false);
+
+        boolean resultNotOverlapping = repository.checkIfHolidayIsPossible(
+                LocalDate.of(2023, 7, 7),
+                LocalDate.of(2023, 8, 7));
+
+        assertThat(resultNotOverlapping).isEqualTo(true);
+
+        boolean resultNotOverlappingEdgeCase = repository.checkIfHolidayIsPossible(
+                LocalDate.of(2020, 8, 5),
+                LocalDate.of(2020, 8, 5));
+
+        assertThat(resultNotOverlappingEdgeCase).isEqualTo(true);
+    }
+
+
 }

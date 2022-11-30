@@ -4,23 +4,28 @@ import static nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Holid
 import static nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.Member.MEMBER;
 
 import nl.jnext.workshop.testcontainers.vakantieplanner.controller.HolidayController;
+import nl.jnext.workshop.testcontainers.vakantieplanner.controller.exceptions.OverlappingHolidayException;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.records.HolidayRecord;
 import nl.jnext.workshop.testcontainers.vakantieplanner.jooq.tables.records.MemberRecord;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Holiday;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.Member;
 import nl.jnext.workshop.testcontainers.vakantieplanner.model.MemberWithHolidays;
+import org.jooq.Configuration;
 import org.jooq.DSLContext;
 
 import static org.jooq.impl.DSL.*;
 
+import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 public class VakantieRepository {
@@ -100,6 +105,10 @@ public class VakantieRepository {
     }
 
     public Holiday addHoliday(String user, Holiday holiday) {
+        boolean possible = checkIfHolidayIsPossible(holiday.from(), holiday.to());
+        if (!possible) {
+            throw new OverlappingHolidayException();
+        }
         int memberId = getIdForUsername(user);
         HolidayRecord holidayRecord = create.newRecord(HOLIDAY);
         holidayRecord.setMemberId(memberId);
@@ -110,11 +119,34 @@ public class VakantieRepository {
         return retrieveHoliday(holidayRecord.getId());
     }
 
-    public void updateHoliday(Holiday holiday) {
-        HolidayRecord holidayRecord = create.selectFrom(HOLIDAY).where(HOLIDAY.ID.eq(holiday.id())).fetchOne();
-        holidayRecord.setDescription(holiday.description());
-        holidayRecord.setStartDate(holiday.from());
-        holidayRecord.setEndDate(holiday.to());
-        holidayRecord.store();
+    public void updateHoliday(String user, Holiday holiday) {
+        create.transaction((Configuration trx) -> {
+            DSLContext create = trx.dsl();
+            HolidayRecord holidayRecord = create.selectFrom(HOLIDAY).where(HOLIDAY.ID.eq(holiday.id())).fetchOne();
+            if (holidayRecord == null) {
+                throw new IllegalStateException("Holiday to be updated could not be found");
+            }
+            // we first need to delete it in order to check date availability
+            holidayRecord.delete();
+            boolean possible = checkIfHolidayIsPossible(holiday.from(), holiday.to());
+            if (possible) {
+                addHoliday(user, holiday);
+            } else {
+                throw new OverlappingHolidayException();
+            }
+        });
+    }
+
+    boolean checkIfHolidayIsPossible(LocalDate from, LocalDate to) {
+        String sql = """
+                        SELECT
+                        (holiday.start_date, holiday.end_date)
+                        OVERLAPS (DATE '%s', DATE '%s')
+                        FROM holiday;
+                """.formatted(from, to);
+
+        return create.fetch(sql)
+                .getValues("overlaps")
+                .stream().noneMatch(v -> (boolean) v);
     }
 }
