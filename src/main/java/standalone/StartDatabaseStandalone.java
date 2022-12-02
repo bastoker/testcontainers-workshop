@@ -24,6 +24,8 @@ public class StartDatabaseStandalone {
                 postgres.getMappedPort(POSTGRESQL_PORT),
                 postgres.getDatabaseName(),
                 postgres.getUsername());
+        System.out.println("**** ");
+        System.out.println("**** SELECT SQL: select member.name, holiday.* from member, holiday where member.id = holiday.member_id;");
         loopEndlessly();
     }
 
