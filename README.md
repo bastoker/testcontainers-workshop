@@ -5,17 +5,16 @@
     <img src="testcontainers-logo.svg" height="180"/>
 </p>    
 
-## "Holiday Planning Tool"
+## "De VakantiePlanner"
 
-During this workshop we will work with the fictional Holiday Planning Tool.
-This is a web application that can be used to schedule your time off work with your colleagues.
-
-Because we all deserve some time off, don't we?
+Tijdens de workshop werken we aan het testen van een VakantiePlanner.
+Met deze VakantiePlanner kunnen collega's onderling hun vakantie afstemmen.
+Want we verdienen allemaal weleens een dagje vrij, toch?
 
 <img src="holiday.jpg" width="500" />
 
-## High level architecture
-The architecture of the Holiday Planning Tool, or HPT, is as follows:
+## High level architectuur
+De architectuur ziet er in grote lijnen zo uit:
 
 ```mermaid
 graph LR;
@@ -26,25 +25,10 @@ graph LR;
     Keycloak-->PostgreSQL_keycloak[(Keycloak DB)];
 ```
 
-The authentication part is implemented by using Keycloak. Keycloak itself uses a PostgreSQL database.
-Our own application state is persisted using a separate PostgreSQL database instance.
+De authenticatie werkt via Keycloak. Keycloak is een veelgebruikte authenticatie-oplossing.
+Keycloak zelf gebruikt een Postgres database, om de eigen state te bewaren.
 
-The UI only communicates with the HPT-backend and with Keycloak for the login flow.
-
-## Available branches
-This Git repository comprises three branches:
- - **main** - Branch to use as a starting point for the Excercises
- - **solution** - The solution to the Integration Testing Excercises
- - **chaos** - The solution to the extra Chaos Testing Excercise
-
-```mermaid
-gitGraph
-    commit id: "Application"
-    branch solution
-    commit id: "Integration Test Solution"
-    checkout main
-    branch chaos
-    commit id: "Example using Toxiproxy"
-```
-
-
+De VakantiePlanner zelf gebruikt ook een Postgres database, maar deze instantie staat helemaal
+los van de database van Keycloak.
+s
+De UI communiceert alleen met de VakantiePlanner-backend en met Keuycloak voor het inloggen.
