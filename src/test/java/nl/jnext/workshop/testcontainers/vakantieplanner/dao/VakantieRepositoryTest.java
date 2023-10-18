@@ -19,7 +19,8 @@ import static org.assertj.core.api.Assertions.*;
 public class VakantieRepositoryTest {
 
     private static PostgreSQLContainer<?> postgres =
-            new PostgreSQLContainer<>("postgres:15");
+            new PostgreSQLContainer<>("postgres:15")
+                    .withCommand("log_statement=all");
 
     @Autowired
     private VakantieRepository repository;
