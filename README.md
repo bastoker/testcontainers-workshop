@@ -26,7 +26,6 @@ graph LR;
 ```
 
 De authenticatie werkt via Keycloak. Keycloak is een veelgebruikte authenticatie-oplossing.
-Keycloak zelf gebruikt een Postgres database, om de eigen state te bewaren.
 
 De VakantiePlanner zelf gebruikt ook een Postgres database, maar deze instantie staat helemaal
 los van de database van Keycloak.

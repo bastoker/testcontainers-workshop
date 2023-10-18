@@ -96,7 +96,7 @@
       {
         "id": "f27cbfb2-6c94-450d-b9dc-e1e50bf440e2",
         "name": "superuser",
-        "description": "Super user of the Vakantieplanner that allows someone to add and remove team members.",
+        "description": "Super user of the Vakantieplanner that allows someone to add and remove other people's holidays.",
         "composite": false,
         "clientRole": false,
         "containerId": "b52c9cdc-2636-48d6-bbdb-b3d4184410a9",

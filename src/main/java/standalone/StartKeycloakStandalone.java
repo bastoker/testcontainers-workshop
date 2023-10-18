@@ -13,7 +13,7 @@ public class StartKeycloakStandalone {
         keycloak.addNormalUser("bob", "bob");
         keycloak.addSuperUser("alice", "alice");
 
-        System.out.println("**** Keycloak is started, with 2 normal users bob and alice.");
+        System.out.println("**** Keycloak is started, with 1 normal user bob,  and superuser alice.");
         System.out.println("**** Keycloak is accessible on " + keycloak.getAuthServerUrl());
         loopEndlessly();
     }
