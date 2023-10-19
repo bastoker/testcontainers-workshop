@@ -5,25 +5,30 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.util.Scanner;
 
-import static org.testcontainers.containers.PostgreSQLContainer.POSTGRESQL_PORT;
-
 public class StartDatabaseStandalone {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
             DockerImageName.parse("postgres:15"))
             .withDatabaseName("standalone-db")
             .withUsername("admin")
-            .withPassword("admin");
+            .withPassword("admin")
+            .withCommand(new String[]{"postgres", "-c", "fsync=off", "-c", "log_statement=all"});
 
     public static void main(String... args) {
         postgres.start();
 
         System.out.println("**** PostgreSQL database is started.");
         System.out.println("**** PostgreSQL is accessible on " + postgres.getJdbcUrl());
-        System.out.printf(
-                "**** docker run -it psql -h host.docker.internal -p %s -d %s -U %s%n",
-                postgres.getMappedPort(POSTGRESQL_PORT),
+        System.out.println("**** ");
+        System.out.println("**** psql Client Commando: ");
+        System.out.printf("**** docker exec -it %s psql -h localhost -p 5432 -d %s -U %s%n",
+                postgres.getContainerId(),
                 postgres.getDatabaseName(),
                 postgres.getUsername());
+//        System.out.printf(
+//                "**** docker run -it psql -h host.docker.internal -p %s -d %s -U %s%n",
+//                postgres.getMappedPort(POSTGRESQL_PORT),
+//                postgres.getDatabaseName(),
+//                postgres.getUsername());
         System.out.println("**** ");
         System.out.println("**** SELECT SQL: select member.name, holiday.* from member, holiday where member.id = holiday.member_id;");
         loopEndlessly();
